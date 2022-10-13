@@ -1,0 +1,27 @@
+{
+  "name": "beer-hunt",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "nodemon ./server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shehantissera/beer-hunt.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shehantissera/beer-hunt/issues"
+  },
+  "homepage": "https://github.com/shehantissera/beer-hunt#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "nodemon": "^2.0.20"
+  },
+  "devDependencies": {
+    "eslint": "^8.25.0"
+  }
+}

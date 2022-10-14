@@ -1,12 +1,6 @@
 'use strict'
 
-const config = require('config');
-
-// using this package because it makes our life easier
-const fetch = require('node-fetch');
-
-// get the base URL from the config
-const PUNK_API_BASE = config.get('PUNK_API_BASE');
+const commonCtrl = require('./common.controller');
 
 // testcases
 // validate input parameter
@@ -14,16 +8,7 @@ const PUNK_API_BASE = config.get('PUNK_API_BASE');
 // does the pagination work 1 req per second
 // check getDataFromPunkAPI with the result length based on a search param
 
-// defining a class to makesure the beer objects we make sticks to one template
-class Beer {
-    constructor(id, name, description, first_brewed, food_pairing) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.first_brewed = first_brewed;
-        this.food_pairing = food_pairing;
-    }
-}
+
 
 // this method returns preped search query for the API
 const getSearchString = (query) => {
@@ -44,52 +29,22 @@ const getSearchString = (query) => {
 const isSearchRequestValid = (req) => {
     const result = { code: 200, isValid: true, message: "" }
 
-    if (req.query.q == undefined) {
+    if (req.query.q === undefined) {
         result.code = 400;
         result.isValid = false;
-        result.message = "'q' queryparam is required"
+        result.message = "'q' queryparam is required";
+        return result;
     }
-    if (req.query.q == "") {
+    if (req.query.q === "") {
         result.code = 400;
         result.isValid = false;
-        result.message = "'q' cannot be empty"
+        result.message = "'q' cannot be empty";
+        return result;
     }
 
     return result;
 }
 
-// this method invokes the API for data
-const getDataFromPunkAPI = async (searchString) => {
-    let paginate = true;
-    let page = 1;
-    const perPage = 50;
-    const records = [];
-
-    // need to handle pagination, 1 req per second
-
-    // since the API could reply with more than the default 25 records, we need to handle it.
-    do {
-        let url = `${PUNK_API_BASE}/beers?beer_name=${searchString}&page=${page}&per_page=${perPage}`;
-        const response = await fetch(url);
-        const data = await response.json();
-
-        // loop over the data retrived, collect it to our record list
-        data.forEach(e => {
-            // create a beer object with the required fields
-            records.push(new Beer(e.id, e.name, e.description, e.first_brewed, e.food_pairing));
-        });
-
-        // determine to continue pagination or not based on the number of records returned.
-        if (data.length < perPage) {
-            paginate = false;
-        } else {
-            page++;
-        }
-    } while (paginate);
-
-    console.info("Records retrived: ", records.length);
-    return records;
-}
 
 const searchBeerByName = async (req, res) => {
     try {
@@ -106,9 +61,7 @@ const searchBeerByName = async (req, res) => {
         const searchString = getSearchString(req.query.q);
 
         // first invoke the DB, if not call the API
-        const data = await getDataFromPunkAPI(searchString);
-
-
+        const data = await commonCtrl.GetDataFromPunkAPI("search", searchString);
 
         res.json(data);
     } catch (error) {
@@ -117,10 +70,79 @@ const searchBeerByName = async (req, res) => {
     }
 };
 
+// this method validates the rate beer request
+const isRateRequestValid = async (req) => {
+    const result = { code: 200, isValid: true, message: "" }
 
+    if (req.params.id === undefined) {
+        result.code = 400;
+        result.isValid = false;
+        result.message = "'id' param is required";
+        return result;
+    }
+    if (req.params.id.trim() === "") {
+        result.code = 400;
+        result.isValid = false;
+        result.message = "'id' cannot be empty";
+        return result;
+    }
+    if (isNaN(Number(req.params.id))) {
+        result.code = 400;
+        result.isValid = false;
+        result.message = "'id' should be a number";
+        return result;
+    }
+    if (req.body.rating === undefined) {
+        result.code = 400;
+        result.isValid = false;
+        result.message = "'rating' field is required";
+        return result;
+    }
+    if (req.body.rating === "") {
+        result.code = 400;
+        result.isValid = false;
+        result.message = "'rating' cannot be empty";
+        return result;
+    }
+    if (typeof req.body.rating !== "number") {
+        result.code = 400;
+        result.isValid = false;
+        result.message = "'rating' should be in integer type";
+        return result;
+    }
+    if (req.body.rating < 1 || req.body.rating > 5) {
+        result.code = 400;
+        result.isValid = false;
+        result.message = "'rating' should between 1 to 5";
+        return result;
+    }
+    // validate if the beer ID accurate
+    const data = await commonCtrl.GetDataFromPunkAPI("getByID", req.params.id);
+    if (data.length == 0) {
+        result.code = 400;
+        result.isValid = false;
+        result.message = "no beer record found for the given ID";
+        return result;
+    }
+
+    return result;
+}
 
 const rateBeer = async (req, res) => {
     try {
+
+        // validate the request queryparams and params
+        const reqstat = await isRateRequestValid(req);
+        if (!reqstat.isValid) {
+            return res.status(reqstat.code).json({
+                status: reqstat.code,
+                result: reqstat.message
+            });
+        }
+
+
+
+
         res.json({});
     } catch (error) {
         console.error('Internal Error: ', error);

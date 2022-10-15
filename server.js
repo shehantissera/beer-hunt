@@ -15,7 +15,7 @@ app.use(bodyParser.json());
 // mounting the middleware interceptor for all incoming requests
 app.use((req, res, next) => {
     // record the request in the logs
-
+    commonCtrl.LogRequest(req);
 
     // vaildate the request
     const requestResult = commonCtrl.ValidateIncomingRequests(req);

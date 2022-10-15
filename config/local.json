@@ -1,4 +1,5 @@
 {
     "PUNK_API_BASE": "https://api.punkapi.com/v2",
-    "RATINGS_DB": "./databases/ratings"
+    "RATINGS_DB": "./databases/ratings",
+    "LOGS_DB": "./databases/logs"
 }

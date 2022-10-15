@@ -1,11 +1,14 @@
 'use strict'
 
+var NOSQL = require('nosql');
+
 // using this package because it makes our life easier
 const fetch = require('node-fetch');
 
 // get the base URL from the config
 const config = require('config');
 const PUNK_API_BASE = config.get('PUNK_API_BASE');
+const LOGS_DB = config.get('LOGS_DB');
 
 // defining a class to makesure the beer objects we make sticks to one template
 class Beer {
@@ -23,6 +26,7 @@ const GetDataFromPunkAPI = async (type, params) => {
     const records = [];
 
     // need to handle pagination, 1 req per second
+    // that is an future improvement
 
     // select functionality based on the function type
     switch (type) {
@@ -113,4 +117,11 @@ const ValidateIncomingRequests = (req) => {
     return result;
 }
 
-module.exports = { GetDataFromPunkAPI, ValidateIncomingRequests }
+// this method is used to log the requester details on the local database
+const LogRequest = (req) => {
+    // load and insert req.headers as a log
+    const db = NOSQL.load(LOGS_DB);
+    db.insert(req.headers);
+}
+
+module.exports = { GetDataFromPunkAPI, ValidateIncomingRequests, LogRequest }

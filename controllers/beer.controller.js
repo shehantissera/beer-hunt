@@ -141,14 +141,15 @@ const rateBeer = async (req, res) => {
             });
         }
 
-        // implementing the body struct
+        // implementing the body struct to be saved
         const body = {
-            id: req.params.id,
+            id: parseInt(req.params.id),
             rating: req.body.rating,
             comments: req.body.comments === undefined ? "" : req.body.comments
         }
 
-        const db = NOSQL.load('ratings');
+        // load and insert new record to the local DB
+        const db = NOSQL.load('./databases/ratings');
         db.insert(body);
 
         res.json(body);

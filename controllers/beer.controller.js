@@ -137,11 +137,11 @@ const rateBeer = async (req, res) => {
     try {
 
         // validate the request queryparams and params
-        const reqstat = await isRateRequestValid(req);
-        if (!reqstat.isValid) {
-            return res.status(reqstat.code).json({
-                status: reqstat.code,
-                result: reqstat.message
+        const requestResult = await isRateRequestValid(req);
+        if (!requestResult.isValid) {
+            return res.status(requestResult.code).json({
+                status: requestResult.code,
+                result: requestResult.message
             });
         }
 

@@ -78,4 +78,39 @@ const GetDataFromPunkAPI = async (type, params) => {
     return records;
 }
 
-module.exports = { GetDataFromPunkAPI }
+// this method checks the string to match the regex for an email address and returns true/false based on the validity
+const validateEmail = (email) => {
+    return String(email)
+        .toLowerCase()
+        .match(
+            /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+        );
+};
+
+// this method is used to validate all incoming requests
+const ValidateIncomingRequests = (req) => {
+    const result = { code: 200, isValid: true, message: "" }
+
+    if (req.headers['x-user'] === undefined) {
+        result.code = 400;
+        result.isValid = false;
+        result.message = "'x-user' header is required";
+        return result;
+    }
+    if (req.headers['x-user'] === "") {
+        result.code = 400;
+        result.isValid = false;
+        result.message = "'x-user' header shouldn't be empty";
+        return result;
+    }
+    if (!validateEmail(req.headers['x-user'])) {
+        result.code = 400;
+        result.isValid = false;
+        result.message = "'x-user' should be an valid email address";
+        return result;
+    }
+
+    return result;
+}
+
+module.exports = { GetDataFromPunkAPI, ValidateIncomingRequests }

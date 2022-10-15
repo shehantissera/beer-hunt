@@ -3,6 +3,10 @@
 var NOSQL = require('nosql');
 const commonCtrl = require('./common.controller');
 
+// get the base URL from the config
+const config = require('config');
+const RATINGS_DB = config.get('RATINGS_DB');
+
 // testcases
 // validate input parameter
 // validate if the return search query contains understors instead of spaces- test with different inputs
@@ -149,7 +153,7 @@ const rateBeer = async (req, res) => {
         }
 
         // load and insert new record to the local DB
-        const db = NOSQL.load('./databases/ratings');
+        const db = NOSQL.load(RATINGS_DB);
         db.insert(body);
 
         res.json(body);

@@ -1,3 +1,4 @@
 {
-    "PUNK_API_BASE": "https://api.punkapi.com/v2"
+    "PUNK_API_BASE": "https://api.punkapi.com/v2",
+    "RATINGS_DB": "./databases/ratings"
 }

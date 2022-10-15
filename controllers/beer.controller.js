@@ -1,5 +1,6 @@
 'use strict'
 
+var NOSQL = require('nosql');
 const commonCtrl = require('./common.controller');
 
 // testcases
@@ -140,10 +141,17 @@ const rateBeer = async (req, res) => {
             });
         }
 
+        // implementing the body struct
+        const body = {
+            id: req.params.id,
+            rating: req.body.rating,
+            comments: req.body.comments === undefined ? "" : req.body.comments
+        }
 
+        const db = NOSQL.load('ratings');
+        db.insert(body);
 
-
-        res.json({});
+        res.json(body);
     } catch (error) {
         console.error('Internal Error: ', error);
         res.sendStatus(500);

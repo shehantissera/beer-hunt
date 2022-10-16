@@ -60,6 +60,8 @@ const searchBeerByName = async (req, res) => {
 
         // check for search query in memory-cache before invoking the API
         let data = cache.get(searchString);
+
+        // if data object is null, then go in
         if (!data) {
             // invoking the API since proper results were not fund on the cache
             data = await commonCtrl.GetDataFromPunkAPI("search", searchString);

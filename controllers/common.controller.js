@@ -122,7 +122,7 @@ const LogRequest = async (req) => {
         // setup the body to be saved
         const record = {
             user: req.headers["x-user"],
-            endpoint: req.hostname + req.url,
+            endpoint: req.url,
             headers: req.headers
         }
         // load and insert record object as a log

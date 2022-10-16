@@ -2,6 +2,9 @@
 
 npm install
 
+building the vue project
+npm run build
+
 npm start
 
 npm run test

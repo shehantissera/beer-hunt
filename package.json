@@ -5,7 +5,10 @@
   "main": "server.js",
   "scripts": {
     "start": "nodemon ./server.js",
-    "test": "mocha --exit --timeout 5000"
+    "test": "mocha --exit --timeout 5000",
+    "serve": "vue-project serve",
+    "build": "vue-project build --dest build",
+    "lint": "vue-cli-service lint"
   },
   "repository": {
     "type": "git",

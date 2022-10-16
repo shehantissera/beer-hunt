@@ -1,7 +1,8 @@
 'use strict'
 
-var NOSQL = require('nosql');
+const NOSQL = require('nosql');
 const commonCtrl = require('./common.controller');
+const cache = require('memory-cache');
 
 // get the base URL from the config
 const config = require('config');
@@ -57,8 +58,13 @@ const searchBeerByName = async (req, res) => {
         // prep the search query before invoking API
         const searchString = getSearchString(req.query.q);
 
-        // first invoke the DB, if not call the API
-        const data = await commonCtrl.GetDataFromPunkAPI("search", searchString);
+        // check for search query in memory-cache before invoking the API
+        let data = cache.get(searchString);
+        if (!data) {
+            // invoking the API since proper results were not fund on the cache
+            data = await commonCtrl.GetDataFromPunkAPI("search", searchString);
+            cache.put(searchString, data);
+        }
 
         res.json(data);
     } catch (error) {

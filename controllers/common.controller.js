@@ -119,9 +119,15 @@ const ValidateIncomingRequests = (req) => {
 const LogRequest = async (req) => {
 
     try {
-        // load and insert req.headers as a log
+        // setup the body to be saved
+        const record = {
+            user: req.headers["x-user"],
+            endpoint: req.hostname + req.url,
+            headers: req.headers
+        }
+        // load and insert record object as a log
         const db = NOSQL.load(LOGS_DB);
-        const resp = await db.insert(req.headers);
+        const resp = await db.insert(record);
     } catch (error) {
         console.error('Internal Error: ', error);
         return false;

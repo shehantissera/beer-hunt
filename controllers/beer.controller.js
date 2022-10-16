@@ -134,9 +134,6 @@ const isRateRequestValid = async (req) => {
 const rateBeer = async (req, res) => {
     try {
 
-        console.log("HEREEEEEEEEEEEEEE");
-        console.log(req.body);
-
         // validate the request queryparams and params
         const requestResult = await isRateRequestValid(req);
         if (!requestResult.isValid) {

@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon ./server.js",
+    "start": "cd app && npm run build && cd .. && nodemon ./server.js",
     "test": "mocha --exit --timeout 5000"
   },
   "repository": {

@@ -15,4 +15,17 @@ const router = createRouter({
     routes,
 });
 
+// validate each route if the user is logged in
+router.beforeEach(async (to, from) => {
+
+    // get the x-user from the localstorage
+    const user = localStorage.getItem('x-user');
+
+    // navigate to login page if not authenticated
+    if (!user && to.name !== 'Login') {
+        // redirect the user to the login page
+        return { name: 'Login' }
+    }
+})
+
 export default router;

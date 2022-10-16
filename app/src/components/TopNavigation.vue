@@ -1,9 +1,26 @@
+<script>
+export default {
+    data() {
+        return {
+            emailAddress: "someEmailAddress",
+        }
+    },
+    methods: {
+        loginOut(e) {
+            localStorage.removeItem('x-user');
+        }
+    }
+}
+</script>
 
 <template>
     <div class="topnav">
         <div>BeerHunt App</div>
-        <router-link to="/login">Login</router-link>
-        <div>Logout</div>
+        <div class="actions">
+            <div class="email">{{emailAddress}}</div>
+            <a href="#" @click="loginOut()">Logout</a>
+        </div>
+
     </div>
 </template>
 
@@ -14,13 +31,12 @@
     justify-content: space-between;
 }
 
-@media (min-width: 1024px) {
-    .topnav {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-        padding-right: calc(var(--section-gap) / 2);
-    }
+.email {
+    font-weight: bold;
+    margin-right: 20px;
+}
+
+.actions {
+    display: flex;
 }
 </style>

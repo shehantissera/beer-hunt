@@ -2,6 +2,7 @@
 <template>
     <div class="topnav">
         <div>BeerHunt App</div>
+        <router-link to="/login">Login</router-link>
         <div>Logout</div>
     </div>
 </template>

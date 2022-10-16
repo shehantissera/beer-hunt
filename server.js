@@ -1,16 +1,24 @@
 'use strict';
 
-const express = require('express');
-const bodyParser = require('body-parser')
-const commonController = require('./controllers/common.controller');
+import express from 'express'
+import bodyParser from 'body-parser';
+import commonController from './controllers/common.controller.js';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import history from 'connect-history-api-fallback'
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 const app = express();
+
 // define the port in a variable incase if we need to change it in the future
 const port = 3000;
+
 // defining the index of the built project
-const path = __dirname + '/app/dist/';
+const distpath = __dirname + '/app/dist/';
+
 // separate the routes and the functionality to different files for futre ease of maintainance and improvements
-const beerRouter = require('./routes/beer.route');
+import beerRouter from './routes/beer.route.js'
 
 // configuring express to use body-parser
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -37,12 +45,15 @@ app.use("/api/", async (req, res, next) => {
 app.use('/api/beer', beerRouter);
 
 // setting the static webpage to express
-app.use(express.static(path));
+const staticFileMiddleware = express.static(path.join(distpath))
+app.use(staticFileMiddleware)
+app.use(history())
+app.use(staticFileMiddleware)
 
-// host the index page to the get method
+// serving the index as the landing page
 app.get('/', (req, res) => {
-    res.sendFile(path + "index.html");
-});
+    res.render(path.join(distpath + '/index.html'))
+})
 
 app.listen(port, async () => {
     try {

@@ -1,12 +1,13 @@
 'use strict'
 
-var NOSQL = require('nosql');
+import NOSQL from 'nosql'
 
 // using this package because it makes our life easier
-const fetch = require('node-fetch');
+import fetch from 'node-fetch'
 
 // get the base URL from the config
-const config = require('config');
+import config from 'config'
+
 const PUNK_API_BASE = config.get('PUNK_API_BASE');
 const LOGS_DB = config.get('LOGS_DB');
 
@@ -136,7 +137,7 @@ const LogRequest = async (req) => {
     }
 }
 
-module.exports = {
+export default {
     GetDataFromPunkAPI,
     ValidateIncomingRequests,
     LogRequest,

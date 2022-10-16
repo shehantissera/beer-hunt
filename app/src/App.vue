@@ -1,16 +1,8 @@
 <script setup>
-import TopNavigation from './components/TopNavigation.vue'
-import SearchComponent from './components/SearchComponent.vue'
 </script>
 
 <template>
-
-  <TopNavigation />
-
-  <main>
-    <SearchComponent />
-  </main>
-
+  <router-view></router-view>
 </template>
 
 <style scoped>

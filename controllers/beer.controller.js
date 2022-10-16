@@ -1,11 +1,13 @@
 'use strict'
 
-const NOSQL = require('nosql');
-const commonCtrl = require('./common.controller');
-const cache = require('memory-cache');
+import NOSQL from 'nosql';
+import commonController from './common.controller.js';
+import cache from 'memory-cache'
 
 // get the base URL from the config
-const config = require('config');
+import config from 'config'
+
+// const config = require('config');
 const RATINGS_DB = config.get('RATINGS_DB');
 
 // this method returns preped search query for the API
@@ -64,7 +66,7 @@ const searchBeerByName = async (req, res) => {
         // if data object is null, then go in
         if (!data) {
             // invoking the API since proper results were not fund on the cache
-            data = await commonCtrl.GetDataFromPunkAPI("search", searchString);
+            data = await commonController.GetDataFromPunkAPI("search", searchString);
             cache.put(searchString, data);
         }
 
@@ -128,7 +130,7 @@ const isRateRequestValid = async (req) => {
         return result;
     }
     // validate if the beer ID accurate
-    const data = await commonCtrl.GetDataFromPunkAPI("getByID", req.params.id);
+    const data = await commonController.GetDataFromPunkAPI("getByID", req.params.id);
     if (data.length == 0) {
         result.code = 400;
         result.isValid = false;
@@ -169,7 +171,7 @@ const rateBeer = async (req, res) => {
     }
 };
 
-module.exports = {
+export default {
     searchBeerByName,
     rateBeer,
     getSearchString,

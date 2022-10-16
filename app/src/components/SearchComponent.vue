@@ -50,6 +50,7 @@ export default {
         search() {
             if (this.search_text != "") {
                 // invoke API
+                console.log(this.search_text);
                 this.search_text = "";
             }
         },

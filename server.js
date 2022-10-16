@@ -2,7 +2,7 @@
 
 const express = require('express');
 const bodyParser = require('body-parser')
-const commonCtrl = require('./controllers/common.controller');
+const commonController = require('./controllers/common.controller');
 
 const app = express();
 // define the port in a variable incase if we need to change it in the future
@@ -13,12 +13,12 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 // mounting the middleware interceptor for all incoming requests
-app.use((req, res, next) => {
+app.use(async (req, res, next) => {
     // record the request in the logs
-    commonCtrl.LogRequest(req);
+    await commonController.LogRequest(req);
 
     // vaildate the request
-    const requestResult = commonCtrl.ValidateIncomingRequests(req);
+    const requestResult = commonController.ValidateIncomingRequests(req);
     if (requestResult.isValid) {
         next();
     } else {

@@ -7,14 +7,6 @@ const commonCtrl = require('./common.controller');
 const config = require('config');
 const RATINGS_DB = config.get('RATINGS_DB');
 
-// testcases
-// validate input parameter
-// validate if the return search query contains understors instead of spaces- test with different inputs
-// does the pagination work 1 req per second
-// check getDataFromPunkAPI with the result length based on a search param
-
-
-
 // this method returns preped search query for the API
 const getSearchString = (query) => {
 
@@ -97,6 +89,12 @@ const isRateRequestValid = async (req) => {
         result.message = "'id' should be a number";
         return result;
     }
+    if (req.body === undefined) {
+        result.code = 400;
+        result.isValid = false;
+        result.message = "request 'body' is required";
+        return result;
+    }
     if (req.body.rating === undefined) {
         result.code = 400;
         result.isValid = false;
@@ -136,6 +134,9 @@ const isRateRequestValid = async (req) => {
 const rateBeer = async (req, res) => {
     try {
 
+        console.log("HEREEEEEEEEEEEEEE");
+        console.log(req.body);
+
         // validate the request queryparams and params
         const requestResult = await isRateRequestValid(req);
         if (!requestResult.isValid) {
@@ -165,5 +166,8 @@ const rateBeer = async (req, res) => {
 
 module.exports = {
     searchBeerByName,
-    rateBeer
+    rateBeer,
+    getSearchString,
+    isSearchRequestValid,
+    isRateRequestValid
 };

@@ -77,8 +77,6 @@ const GetDataFromPunkAPI = async (type, params) => {
             break;
         }
     }
-
-    console.info("Records retrived: ", records.length);
     return records;
 }
 
@@ -118,10 +116,23 @@ const ValidateIncomingRequests = (req) => {
 }
 
 // this method is used to log the requester details on the local database
-const LogRequest = (req) => {
-    // load and insert req.headers as a log
-    const db = NOSQL.load(LOGS_DB);
-    db.insert(req.headers);
+const LogRequest = async (req) => {
+
+    try {
+        // load and insert req.headers as a log
+        const db = NOSQL.load(LOGS_DB);
+        const resp = await db.insert(req.headers);
+    } catch (error) {
+        console.error('Internal Error: ', error);
+        return false;
+    } finally {
+        return true;
+    }
 }
 
-module.exports = { GetDataFromPunkAPI, ValidateIncomingRequests, LogRequest }
+module.exports = {
+    GetDataFromPunkAPI,
+    ValidateIncomingRequests,
+    LogRequest,
+    validateEmail
+}

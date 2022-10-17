@@ -21,7 +21,11 @@ export default {
 
 <template>
     <div class="topnav">
-        <div>BeerHunt App</div>
+        <div class="logo">
+            <img width="50" height="50" src="../assets/beer.gif" alt="">
+            <h2 class="title"> <b>BeerHunt</b></h2>
+        </div>
+
         <div class="actions">
             <div class="email">{{emailAddress}}</div>
             <a href="#" @click="loginOut()">Logout</a>
@@ -31,6 +35,15 @@ export default {
 </template>
 
 <style scoped>
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.title {
+    padding-left: 20px;
+}
+
 .topnav {
     display: flex;
     align-content: center;
@@ -45,5 +58,6 @@ export default {
 
 .actions {
     display: flex;
+    align-items: center;
 }
 </style>

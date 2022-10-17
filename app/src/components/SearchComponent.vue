@@ -25,17 +25,28 @@ export default {
                     });
                     const data = await res.json();
                     this.search_results = data;
+                    localStorage.setItem("search", this.search_text);
                 } catch (error) {
                     console.log(error);
-                } finally {
-                    this.search_text = "";
                 }
             }
         },
         searchOnEnter(e) {
             if (e.key == 'Enter') {
-                this.search(this.search_text)
+                this.search()
             }
+        },
+        clear() {
+            this.search_results = [];
+            this.search_text = "";
+            localStorage.removeItem("search");
+        }
+    },
+    mounted() {
+        const search = localStorage.getItem('search');
+        if (search) {
+            this.search_text = search;
+            this.search()
         }
     }
 }
@@ -47,7 +58,10 @@ export default {
             placeholder="Search for beer ... press enter">
         <button class="button" @click="search()"><img width="15" height="15"
                 src="https://static.thenounproject.com/png/1012361-200.png" alt=""></button>
+        <button class="button" @click="clear()"><img width="15" height="15"
+                src="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-close-512.png" alt=""></button>
     </div>
+    <div v-if="search_results.length == 0">No Results found</div>
     <SearchItem :key="item.id" :searchItem="item" v-for="item in search_results">
     </SearchItem>
 </template>

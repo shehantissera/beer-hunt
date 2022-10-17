@@ -1,5 +1,6 @@
 <template lang="">
-    <form class="login-panel" @submit="login($event)">
+    <div class="loginpage">
+        <form class="login-panel" @submit="login($event)">
         <div>
             <h2>Please enter your email</h2>
         </div>
@@ -11,6 +12,8 @@
             <input :disabled="emailAddress == ''" class="btn btn-primary" type="submit" value="Continue">
         </div>
     </form>
+    </div>
+
 </template>
 <script>
 export default {
@@ -42,6 +45,11 @@ export default {
 }
 </script>
 <style scoped>
+.loginpage {
+    display: flex;
+    align-items: center;
+}
+
 .actions {
     display: flex;
     justify-content: end;

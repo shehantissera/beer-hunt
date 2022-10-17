@@ -154,7 +154,6 @@ export default {
 .inputctrl {
     background-color: rgb(50, 50, 50);
     border-radius: 10px;
-    /* padding: 10px; */
 }
 
 .inputbox {
@@ -205,7 +204,11 @@ input[text] {
 }
 
 .backbutton {
-    padding: 10px 0px;
+    padding: 10px;
+}
+
+.backbutton button {
+    padding: 10px 20px;
 }
 
 .review-section {

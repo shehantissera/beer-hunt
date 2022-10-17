@@ -1,9 +1,9 @@
 'use strict'
 
-const chai = require('chai');
-const chaiHttp = require('chai-http');
-const express = require('express');
-const beerRouter = require('../routes/beer.route');
+import chai from 'chai';
+import chaiHttp from 'chai-http'
+import express from 'express'
+import beerRouter from '../routes/beer.route.js'
 
 const expect = chai.expect;
 

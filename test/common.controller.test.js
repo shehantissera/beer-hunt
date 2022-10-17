@@ -1,7 +1,7 @@
 'use strict'
 
-const expect = require('chai').expect;
-const commonController = require("../controllers/common.controller");
+import { expect } from 'chai';
+import commonController from '../controllers/common.controller.js';
 
 describe('Common Controller Tests', () => {
 

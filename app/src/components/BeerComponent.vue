@@ -18,23 +18,13 @@
         </div>
         <div class="beer-info">
             <div class="review-section">
-                <h2>Reviews</h2>
+                <h2 class="title">Reviews</h2>
 
                 <div class="review">
-                    <div>XXXXX</div>
-                    <div>this is the comment</div>
-                </div>
-
-                <div>
-                    <div>XXXXX</div>
-                    <div>this is the comment</div>
-                </div>
-                <div>
-                    <div>XXXXX</div>
-                    <div>this is the comment</div>
-                </div>
-                <div>
-                    <div>XXXXX</div>
+                    <div class="stars">
+                        <star-rating :star-size="20" :rating="4" :read-only="true"/> 
+                        <span class="email"> <i>email@address.com</i> </span>
+                    </div>
                     <div>this is the comment</div>
                 </div>
             </div>
@@ -42,7 +32,11 @@
     </div>
 </template>
 <script>
+import StarRating from 'vue-star-rating'
 export default {
+    components: {
+        StarRating
+    },
     data() {
         return {
             beerInfo: {
@@ -73,7 +67,27 @@ export default {
     }
 }
 </script>
-<style>
+<style scoped>
+.email {
+    padding-left: 20px;
+}
+
+.stars {
+    display: flex;
+    justify-content: start;
+
+}
+
+.title {
+    margin-bottom: 10px;
+}
+
+.review {
+    padding: 10px;
+    /* background-color: darkcyan; */
+    margin-bottom: 10px;
+}
+
 input[type=button] {
     padding: 12px 20px 12px 40px;
 }

@@ -143,7 +143,6 @@ const isRateRequestValid = async (req) => {
 
 const rateBeer = async (req, res) => {
     try {
-
         // validate the request queryparams and params
         const requestResult = await isRateRequestValid(req);
         if (!requestResult.isValid) {
@@ -156,6 +155,7 @@ const rateBeer = async (req, res) => {
         // implementing the body struct to be saved
         const body = {
             id: parseInt(req.params.id),
+            user: req.headers["x-user"],
             rating: req.body.rating,
             comments: req.body.comments === undefined ? "" : req.body.comments
         }
@@ -171,10 +171,71 @@ const rateBeer = async (req, res) => {
     }
 };
 
+// this method validates the search request
+const isGetRatingRequestValid = (req) => {
+    const result = { code: 200, isValid: true, message: "" }
+
+    if (req.params.id === undefined) {
+        result.code = 400;
+        result.isValid = false;
+        result.message = "'id' param is required";
+        return result;
+    }
+    if (req.params.id.trim() === "") {
+        result.code = 400;
+        result.isValid = false;
+        result.message = "'id' cannot be empty";
+        return result;
+    }
+    if (isNaN(Number(req.params.id))) {
+        result.code = 400;
+        result.isValid = false;
+        result.message = "'id' should be a number";
+        return result;
+    }
+
+    return result;
+}
+
+
+const getRatingsForBeer = async (req, res) => {
+    try {
+
+        // validate the request queryparams and params
+        const requestResult = await isGetRatingRequestValid(req);
+        if (!requestResult.isValid) {
+            return res.status(requestResult.code).json({
+                status: requestResult.code,
+                result: requestResult.message
+            });
+        }
+
+        // load and insert new record to the local DB
+        const db = NOSQL.load(RATINGS_DB);
+
+        // find the reviews for the given beer id
+        db.find().make(function (filter) {
+            filter.where('id', '=', parseInt(req.params.id));
+            filter.callback(function (err, response) {
+                console.log(err, response);
+                res.json(response);
+            });
+        });
+
+
+
+    } catch (error) {
+        console.error('Internal Error: ', error);
+        res.sendStatus(500);
+    }
+}
+
 export default {
     searchBeerByName,
     rateBeer,
     getSearchString,
     isSearchRequestValid,
-    isRateRequestValid
+    isRateRequestValid,
+    getRatingsForBeer,
+    isGetRatingRequestValid
 };

@@ -61,8 +61,10 @@ app.get('/', (req, res) => {
 
 app.listen(port, async () => {
     try {
+        /* eslint-disable no-alert, no-console */
         console.log(`Beer-hunt server listening on port ${port}`)
     } catch (error) {
+        /* eslint-disable no-alert, no-console */
         console.error('Internal Error: ', error)
         process.exit(1)
     }

@@ -73,7 +73,6 @@ const searchBeerByName = async (req, res) => {
 
         res.json(data)
     } catch (error) {
-        console.error('Internal Error: ', error)
         res.sendStatus(500)
     }
 }
@@ -170,7 +169,6 @@ const rateBeer = async (req, res) => {
 
         res.json(body)
     } catch (error) {
-        console.error('Internal Error: ', error)
         res.sendStatus(500)
     }
 }
@@ -223,7 +221,6 @@ const getRatingsForBeer = async (req, res) => {
             })
         })
     } catch (error) {
-        console.error('Internal Error: ', error)
         res.sendStatus(500)
     }
 }

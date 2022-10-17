@@ -8,12 +8,15 @@ module.exports = {
     env: {
         es2021: true,
         node: true,
-        browser: true
+        mocha: true,
+        browser: true,
     },
-    ignorePatterns: [
-        "app/dist"
-    ],
+    ignorePatterns: ['app/dist'],
     rules: {
         'no-console': 'error',
+    },
+    globals: {
+        localStorage: true,
+        fetch: true,
     },
 }

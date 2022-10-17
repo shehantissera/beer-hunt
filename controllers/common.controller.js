@@ -131,6 +131,7 @@ const ValidateIncomingRequests = (req) => {
 
 // this method is used to log the requester details on the local database
 const LogRequest = async (req) => {
+    let flag = true
     try {
         // setup the body to be saved
         const record = {
@@ -140,13 +141,13 @@ const LogRequest = async (req) => {
         }
         // load and insert record object as a log
         const db = NOSQL.load(LOGS_DB)
-        const resp = await db.insert(record)
+        await db.insert(record)
     } catch (error) {
-        console.error('Internal Error: ', error)
-        return false
+        flag = false
     } finally {
-        return true
+        flag = true
     }
+    return flag
 }
 
 export default {

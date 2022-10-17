@@ -6,6 +6,7 @@ import commonController from './controllers/common.controller.js';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import history from 'connect-history-api-fallback'
+import cors from 'cors'
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -19,6 +20,9 @@ const distpath = __dirname + '/app/dist/';
 
 // separate the routes and the functionality to different files for futre ease of maintainance and improvements
 import beerRouter from './routes/beer.route.js'
+
+// enabling cors for the express server
+app.use(cors())
 
 // configuring express to use body-parser
 app.use(bodyParser.urlencoded({ extended: false }));

@@ -9,49 +9,27 @@ export default {
     data() {
         return {
             search_text: "",
-            search_results: [
-                {
-                    "id": 180,
-                    "name": "Doodlebug",
-                    "description": "Doodlebug is our fusion of low strength and enormously high tropical hop levels – think a mashup of Hop Fiction and How to Disappear Completely, and you’re almost there. Clocking in at 2.8% ABV, Doodlebug is keg-only and is packed with Amarillo, Chinook and Mosaic; letting fly a hoppy buzzbomb at sub-session-strength.",
-                    "first_brewed": "09/2015",
-                    "food_pairing": [
-                        "Lightly curried spiced chickpea dip",
-                        "Fried calamari with a mild sauce",
-                        "Lemon sherbet cookies"
-                    ]
-                },
-                {
-                    "id": 293,
-                    "name": "I Wanna Be Your Dog",
-                    "description": "A collaboration with Omnipollo, known for their uncanny ability to repilcate dessert flavours in indulgent beers. This caramel and pecan flavoured imperial stout has been barrel aged for almost a year in whisky casks, to add an extra level of depth to the pecan mud pie concept.",
-                    "first_brewed": "2017",
-                    "food_pairing": [
-                        "Pecan muffins with chocolate ganache",
-                        "Salted caramels",
-                        "Hazelnut truffles"
-                    ]
-                },
-                {
-                    "id": 302,
-                    "name": "Hazy Jane Bourbon Barrel Aged",
-                    "description": "A draft-only BrewDog bar exclusive; we have experimented with ageing our Vermount IPA for a short time in bourbon and rye barrels, both known for imparting flavour quickly compared to other types of barrel.",
-                    "first_brewed": "2018",
-                    "food_pairing": [
-                        "Coconut vanilla prawns",
-                        "Italian style goat's cheese pizza",
-                        "Vanilla panna cotta with pomegranate"
-                    ]
-                }
-            ]
+            search_results: []
         }
     },
     methods: {
-        search() {
+        async search() {
             if (this.search_text != "") {
-                // invoke API
-                console.log(this.search_text);
-                this.search_text = "";
+                try {
+                    const res = await fetch('http://localhost:3000/api/beer/search?q=' + this.search_text, {
+                        method: "get",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "x-user": localStorage.getItem('x-user'),
+                        }
+                    });
+                    const data = await res.json();
+                    this.search_results = data;
+                } catch (error) {
+                    console.log(error);
+                } finally {
+                    this.search_text = "";
+                }
             }
         },
         searchOnEnter(e) {

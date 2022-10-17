@@ -5,7 +5,7 @@ import SearchComponent from './SearchComponent.vue'
 </script>
 
 <template>
-    <div>
+    <div class="main">
         <TopNavigation />
         <main>
             <SearchComponent />
@@ -14,5 +14,7 @@ import SearchComponent from './SearchComponent.vue'
 </template>
 
 <style scoped>
-
+.main {
+    min-width: 1000px;
+}
 </style>

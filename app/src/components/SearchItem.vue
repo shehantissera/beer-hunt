@@ -9,7 +9,6 @@ export default {
     },
     methods: {
         seeBeerInfo(beerID) {
-            console.log(beerID)
             this.$router.push('/beer/' + beerID)
         }
     }

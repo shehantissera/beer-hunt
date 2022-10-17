@@ -8,8 +8,10 @@
                 <img width="200" height="200" src="https://avery-website-prod.s3.us-west-2.amazonaws.com/islandrascal_product_b07470703d.png" alt="">
             </div>
             <div class="beer-description">
-                <div><h2>{{beerInfo.name}} - <i>{{ beerInfo.first_brewed}}</i></h2>
-                    </div>
+                <div>
+                    <h2>{{beerInfo.name}} - <i>{{ beerInfo.first_brewed}}</i></h2>
+                </div>
+                <star-rating  class="averagestars" :star-size="20" :rating="avarage_ratings" :read-only="true"/> 
                 <div>{{beerInfo.description}}</div>
                 <ul>
                     <li v-for="(item, index) in beerInfo.food_pairing" :key="index">{{item}}</li>
@@ -20,12 +22,12 @@
             <div class="review-section">
                 <h2 class="title">Reviews</h2>
 
-                <div class="review">
+                <div class="review" v-for="(item, index) in reviews" :key="item.id">
                     <div class="stars">
-                        <star-rating :star-size="20" :rating="4" :read-only="true"/> 
-                        <span class="email"> <i>email@address.com</i> </span>
+                        <star-rating :star-size="20" :rating="item.rating" :read-only="true"/> 
+                        <span class="email"> <i>{{item.user}}</i> </span>
                     </div>
-                    <div>this is the comment</div>
+                    <div>{{item.comments}}</div>
                 </div>
             </div>
         </div>
@@ -45,7 +47,9 @@ export default {
                 description: "",
                 first_brewed: "",
                 food_pairing: []
-            }
+            },
+            reviews: [],
+            avarage_ratings: 0
         }
     },
     methods: {
@@ -58,16 +62,41 @@ export default {
                 console.log(error);
             }
         },
+        async getBeerReviews(beerID) {
+            try {
+                const res = await fetch('http://localhost:3000/api/beer/ratings/' + beerID, {
+                    method: "get",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "x-user": localStorage.getItem('x-user'),
+                    }
+                });
+                const data = await res.json();
+                this.calculateAverageRatings(data);
+                this.reviews = data;
+            } catch (error) {
+                console.log(error);
+            }
+        },
+        calculateAverageRatings(data) {
+            let total = data.reduce(function (acc, obj) { return acc + obj.rating; }, 0);
+            this.avarage_ratings = total / data.length;
+        },
         goBack() {
             this.$router.push('/');
         }
     },
     mounted() {
         this.getBeerDetails(this.$route.params.id);
+        this.getBeerReviews(this.$route.params.id);
     }
 }
 </script>
 <style scoped>
+.averagestars {
+    padding: 20px 0px;
+}
+
 .email {
     padding-left: 20px;
 }
@@ -84,7 +113,6 @@ export default {
 
 .review {
     padding: 10px;
-    /* background-color: darkcyan; */
     margin-bottom: 10px;
 }
 

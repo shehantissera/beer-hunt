@@ -5,6 +5,7 @@
     "main": "server.js",
     "type": "module",
     "scripts": {
+        "init": "cd app && npm i && cd .. npm i",
         "start": "cd app && npm run build && cd .. && nodemon ./server.js",
         "test": "mocha --exit --timeout 5000",
         "format:check": "prettier --check .",

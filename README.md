@@ -9,7 +9,11 @@ The following should be installed on your machine in order to run this applicati
  - [Git](https://git-scm.com/)
 
 ### Initiate & Run the project
-Run the following command on your terminal to initiate the project. It should install all the files necessary to run this project.
+Clone the this project using for following
+
+    git clone https://github.com/shehantissera/beer-hunt.git
+
+Open a terminal in your project directory and run the following command on your terminal to initiate the project. It should install all the files necessary to run this project.
 
     npm run init
 

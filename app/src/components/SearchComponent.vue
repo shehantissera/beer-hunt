@@ -17,7 +17,7 @@ export default {
                 try {
                     const res = await fetch(
                         'http://localhost:3000/api/beer/search?q=' +
-                            this.search_text,
+                        this.search_text,
                         {
                             method: 'get',
                             headers: {
@@ -57,35 +57,17 @@ export default {
 
 <template>
     <div class="searchbar">
-        <input
-            @keydown="searchOnEnter($event)"
-            v-model="search_text"
-            type="text"
-            placeholder="Search for beer ... press enter"
-        />
+        <input @keydown="searchOnEnter($event)" v-model="search_text" type="text" placeholder="Search for beer..." />
         <button class="button" @click="search()">
-            <img
-                width="15"
-                height="15"
-                src="https://static.thenounproject.com/png/1012361-200.png"
-                alt=""
-            />
+            <img width="15" height="15" src="https://static.thenounproject.com/png/1012361-200.png" alt="" />
         </button>
         <button class="button" @click="clear()">
-            <img
-                width="15"
-                height="15"
-                src="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-close-512.png"
-                alt=""
-            />
+            <img width="15" height="15" src="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-close-512.png"
+                alt="" />
         </button>
     </div>
     <div v-if="search_results.length == 0">No Results found</div>
-    <SearchItem
-        :key="item.id"
-        :searchItem="item"
-        v-for="item in search_results"
-    >
+    <SearchItem :key="item.id" :searchItem="item" v-for="item in search_results">
     </SearchItem>
 </template>
 

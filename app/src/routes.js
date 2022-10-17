@@ -3,11 +3,13 @@ import { createWebHistory, createRouter } from "vue-router";
 // defining route components
 import MainPage from './components/MainPage.vue'
 import LoginPage from './components/LoginPage.vue'
+import BeerInfo from './components/BeerInfo.vue'
 
 // definging the routes
 const routes = [
-    { path: '/', name: "Home Page", component: MainPage },
-    { path: '/login', name: "Login", component: LoginPage }
+    { path: '/', name: "HomePage", component: MainPage },
+    { path: '/login', name: "Login", component: LoginPage },
+    { path: '/beer/:id', name: "BeerInfo", component: BeerInfo },
 ]
 
 const router = createRouter({

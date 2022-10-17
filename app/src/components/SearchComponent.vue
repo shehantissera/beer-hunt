@@ -48,7 +48,8 @@ export default {
         <button class="button" @click="search()"><img width="15" height="15"
                 src="https://static.thenounproject.com/png/1012361-200.png" alt=""></button>
     </div>
-    <SearchItem :key="item.id" :searchItem="item" v-for="item in search_results"></SearchItem>
+    <SearchItem :key="item.id" :searchItem="item" v-for="item in search_results">
+    </SearchItem>
 </template>
 
 <style scoped>

@@ -6,12 +6,18 @@ export default {
             type: Object,
             required: true
         }
+    },
+    methods: {
+        seeBeerInfo(beerID) {
+            console.log(beerID)
+            this.$router.push('/beer/' + beerID)
+        }
     }
 }
 </script>
 
 <template>
-    <div class="search-item">
+    <div class="search-item" @click="seeBeerInfo(searchItem.id)">
         <div class="beername">{{searchItem.name}} - <i>first brewed - {{searchItem.first_brewed}}</i></div>
         <div>{{searchItem.description}}</div>
         <ul v-if="searchItem.food_pairing.length">
@@ -27,6 +33,7 @@ export default {
 }
 
 .search-item {
+    cursor: pointer;
     padding: 15px;
     border-radius: 10px;
     background-color: #242424;

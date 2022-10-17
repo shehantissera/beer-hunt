@@ -204,7 +204,7 @@ input[text] {
 }
 
 .backbutton {
-    padding: 10px;
+    padding: 20px 0;
 }
 
 .backbutton button {

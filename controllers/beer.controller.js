@@ -217,12 +217,9 @@ const getRatingsForBeer = async (req, res) => {
         db.find().make(function (filter) {
             filter.where('id', '=', parseInt(req.params.id));
             filter.callback(function (err, response) {
-                console.log(err, response);
                 res.json(response);
             });
         });
-
-
 
     } catch (error) {
         console.error('Internal Error: ', error);

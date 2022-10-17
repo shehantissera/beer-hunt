@@ -22,6 +22,19 @@
             <div class="review-section">
                 <h2 class="title">Reviews</h2>
 
+                <form @submit="submitComment($event)" class="review inputctrl" >
+                    <div class="inputstar">
+                        <star-rating  class="averagestars" :star-size="25" v-model:rating="new_rating"/> 
+                    </div>
+                    <div class="inputbox">
+                        <input class="search" type="text" name="comment" v-model="comment">
+                        <input :disabled="comment == '' && new_rating == 0" class="searchButton" type="submit" value="Comment">
+                        
+                    </div>
+                    <span class="error-msg">{{errorMessage}}</span>
+                </form>
+
+                <div class="review" v-if="reviews.length == 0"> No reviews yet</div>
                 <div class="review" v-for="(item, index) in reviews" :key="item.id">
                     <div class="stars">
                         <star-rating :star-size="20" :rating="item.rating" :read-only="true"/> 
@@ -49,7 +62,10 @@ export default {
                 food_pairing: []
             },
             reviews: [],
-            avarage_ratings: 0
+            avarage_ratings: 0,
+            new_rating: 0,
+            comment: "",
+            errorMessage: ""
         }
     },
     methods: {
@@ -78,12 +94,44 @@ export default {
                 console.log(error);
             }
         },
+        async invokeBeerRatingAPI(beerID) {
+            try {
+                const postData = {
+                    rating: this.new_rating,
+                    comments: this.comment
+                }
+                const res = await fetch('http://localhost:3000/api/beer/rate/' + beerID, {
+                    method: "post",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "x-user": localStorage.getItem('x-user'),
+                    },
+                    body: JSON.stringify(postData),
+                });
+                this.getBeerReviews(beerID);
+                this.new_rating = 0;
+                this.comment = "";
+            } catch (error) {
+                console.log(error);
+            }
+        },
         calculateAverageRatings(data) {
-            let total = data.reduce(function (acc, obj) { return acc + obj.rating; }, 0);
-            this.avarage_ratings = total / data.length;
+            if (data.length > 0) {
+                let total = data.reduce(function (acc, obj) { return acc + obj.rating; }, 0);
+                this.avarage_ratings = total / data.length;
+            }
         },
         goBack() {
             this.$router.push('/');
+        },
+        submitComment(e) {
+            this.errorMessage = "";
+            e.preventDefault();
+            if (this.new_rating !== 0) {
+                this.invokeBeerRatingAPI(this.$route.params.id);
+            } else {
+                this.errorMessage = "Please select the rating";
+            }
         }
     },
     mounted() {
@@ -93,8 +141,40 @@ export default {
 }
 </script>
 <style scoped>
+.error-msg {
+    color: rgb(255, 128, 128);
+    padding: 10px;
+}
+
+.inputstar {
+    display: flex;
+    padding: 10px 0px 0px 10px;
+}
+
+.inputctrl {
+    background-color: rgb(50, 50, 50);
+    border-radius: 10px;
+    /* padding: 10px; */
+}
+
+.inputbox {
+    display: flex;
+    flex-direction: row;
+    padding: 0px 10px 20px 10px;
+}
+
+.search {
+    display: flex;
+    width: 500px;
+}
+
+.searchButton {
+    display: flex;
+    /* flex-grow: 1; */
+}
+
 .averagestars {
-    padding: 20px 0px;
+    padding: 10px 0px;
 }
 
 .email {
@@ -116,8 +196,12 @@ export default {
     margin-bottom: 10px;
 }
 
-input[type=button] {
-    padding: 12px 20px 12px 40px;
+input {
+    padding: 12px 20px 12px 20px;
+}
+
+input[text] {
+    flex-grow: 5;
 }
 
 .backbutton {

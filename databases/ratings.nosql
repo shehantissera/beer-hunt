@@ -6,3 +6,8 @@
 {"id":1,"user":"someone@gmail.com","rating":1,"comments":"Once upon a time I drank a beer"}
 {"id":1,"user":"someone@gmail.com","rating":1,"comments":"Once upon a time I drank a beer"}
 {"id":1,"user":"someone@gmail.com","rating":1,"comments":"Once upon a time I drank a beer"}
+{"id":1,"user":"tistuslabs@gmail.com","rating":4,"comments":"testing"}
+{"id":1,"user":"tistuslabs@gmail.com","rating":2,"comments":"testing 2"}
+{"id":1,"user":"tistuslabs@gmail.com","rating":5,"comments":"wow. nice"}
+{"id":3,"user":"tistuslabs@gmail.com","rating":5,"comments":"wanna try?"}
+{"id":3,"user":"tistuslabs@gmail.com","rating":3,"comments":"another one, this is the "}

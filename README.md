@@ -13,6 +13,10 @@ Clone this project using for following command in your terminal openned at your 
 
     git clone https://github.com/shehantissera/beer-hunt.git
 
+Change directory to the project
+
+    cd beer-hunt
+
 Run the following command on your terminal to initiate the project. It should install all the files necessary to run this project.
 
     npm run init

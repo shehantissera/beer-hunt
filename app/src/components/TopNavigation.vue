@@ -2,13 +2,19 @@
 export default {
     data() {
         return {
-            emailAddress: "someEmailAddress",
+            emailAddress: "",
         }
     },
     methods: {
         loginOut(e) {
             localStorage.removeItem('x-user');
+        },
+        loadData() {
+            this.emailAddress = localStorage.getItem('x-user');
         }
+    },
+    mounted() {
+        this.loadData();
     }
 }
 </script>

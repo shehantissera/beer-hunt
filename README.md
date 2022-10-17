@@ -1,14 +1,16 @@
-
 # BeerHunt
+
 This is a application built with VueJS on top of an ExpressJS server. It consumes a thrid-party API called PunkAPI for data retrieval. This is built to demonstrates my ability to work with NodeJS and VueJS in a small given period of time.
 
 ### Prerequisites
+
 The following should be installed on your machine in order to run this application.
 
- - [NodeJS](https://nodejs.org/en/)
- - [Git](https://git-scm.com/)
+-   [NodeJS](https://nodejs.org/en/)
+-   [Git](https://git-scm.com/)
 
 ### Initiate & Run the project
+
 Clone this project using for following command in your terminal openned at your projects directory.
 
     git clone https://github.com/shehantissera/beer-hunt.git
@@ -30,11 +32,14 @@ Now, navigate to the following URL on your browser.
     http://localhost:3000/
 
 You can now search for any beer name and see results and it's details.
+
 ### API Documentation
+
 The following Postman Link contains the full documentation of all the available API on the Express Server
 [Link to the Postman Documentation Link](https://documenter.getpostman.com/view/109342/2s83zpL1jf)
 
 ### Additional commands
+
 Run the following to run all the testcases
 
     npm run test

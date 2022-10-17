@@ -2,35 +2,34 @@
 export default {
     data() {
         return {
-            emailAddress: "",
+            emailAddress: '',
         }
     },
     methods: {
         loginOut(e) {
-            localStorage.removeItem('x-user');
+            localStorage.removeItem('x-user')
         },
         loadData() {
-            this.emailAddress = localStorage.getItem('x-user');
-        }
+            this.emailAddress = localStorage.getItem('x-user')
+        },
     },
     mounted() {
-        this.loadData();
-    }
+        this.loadData()
+    },
 }
 </script>
 
 <template>
     <div class="topnav">
         <div class="logo">
-            <img width="50" height="50" src="../assets/beer.gif" alt="">
-            <h2 class="title"> <b>BeerHunt</b></h2>
+            <img width="50" height="50" src="../assets/beer.gif" alt="" />
+            <h2 class="title"><b>BeerHunt</b></h2>
         </div>
 
         <div class="actions">
-            <div class="email">{{emailAddress}}</div>
+            <div class="email">{{ emailAddress }}</div>
             <a href="#" @click="loginOut()">Logout</a>
         </div>
-
     </div>
 </template>
 

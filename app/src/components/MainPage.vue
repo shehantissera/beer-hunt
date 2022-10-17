@@ -1,7 +1,6 @@
 <script setup>
 import TopNavigation from './TopNavigation.vue'
 import SearchComponent from './SearchComponent.vue'
-
 </script>
 
 <template>
@@ -13,6 +12,4 @@ import SearchComponent from './SearchComponent.vue'
     </div>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

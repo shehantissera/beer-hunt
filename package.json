@@ -1,38 +1,44 @@
 {
-  "name": "beer-hunt",
-  "version": "1.0.0",
-  "description": "",
-  "main": "server.js",
-  "type": "module",
-  "scripts": {
-    "start": "cd app && npm run build && cd .. && nodemon ./server.js",
-    "test": "mocha --exit --timeout 5000"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/shehantissera/beer-hunt.git"
-  },
-  "author": "Shehan Tissera",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/shehantissera/beer-hunt/issues"
-  },
-  "homepage": "https://github.com/shehantissera/beer-hunt#readme",
-  "dependencies": {
-    "body-parser": "^1.20.1",
-    "chai-http": "^4.3.0",
-    "config": "^3.3.8",
-    "connect-history-api-fallback": "^2.0.0",
-    "cors": "^2.8.5",
-    "express": "^4.18.2",
-    "memory-cache": "^0.2.0",
-    "node-fetch": "^2.6.7",
-    "nodemon": "^2.0.20",
-    "nosql": "^6.1.0"
-  },
-  "devDependencies": {
-    "chai": "^4.3.6",
-    "eslint": "^8.25.0",
-    "mocha": "^10.1.0"
-  }
+    "name": "beer-hunt",
+    "version": "1.0.0",
+    "description": "",
+    "main": "server.js",
+    "type": "module",
+    "scripts": {
+        "start": "cd app && npm run build && cd .. && nodemon ./server.js",
+        "test": "mocha --exit --timeout 5000",
+        "format:check": "prettier --check .",
+        "format:write": "prettier --write .",
+        "lint:check": "eslint .",
+        "lint:fix": "eslint --fix ."
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/shehantissera/beer-hunt.git"
+    },
+    "author": "Shehan Tissera",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/shehantissera/beer-hunt/issues"
+    },
+    "homepage": "https://github.com/shehantissera/beer-hunt#readme",
+    "dependencies": {
+        "body-parser": "^1.20.1",
+        "chai-http": "^4.3.0",
+        "config": "^3.3.8",
+        "connect-history-api-fallback": "^2.0.0",
+        "cors": "^2.8.5",
+        "express": "^4.18.2",
+        "memory-cache": "^0.2.0",
+        "node-fetch": "^2.6.7",
+        "nodemon": "^2.0.20",
+        "nosql": "^6.1.0"
+    },
+    "devDependencies": {
+        "chai": "^4.3.6",
+        "eslint": "^8.25.0",
+        "eslint-config-prettier": "^8.5.0",
+        "mocha": "^10.1.0",
+        "prettier": "^2.7.1"
+    }
 }

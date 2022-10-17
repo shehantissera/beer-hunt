@@ -1,4 +1,3 @@
-
 <script setup>
 import TopNavigation from './TopNavigation.vue'
 import BeerComponent from './BeerComponent.vue'
@@ -11,6 +10,4 @@ import BeerComponent from './BeerComponent.vue'
         </main>
     </div>
 </template>
-<style lang="">
-    
-</style>
+<style lang=""></style>

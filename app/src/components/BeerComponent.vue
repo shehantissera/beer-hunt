@@ -5,16 +5,33 @@
         </div>
         <div class="beer-info">
             <div class="beer-img">
-                <img width="200" height="200" src="https://avery-website-prod.s3.us-west-2.amazonaws.com/islandrascal_product_b07470703d.png" alt="">
+                <img
+                    width="200"
+                    height="200"
+                    src="https://avery-website-prod.s3.us-west-2.amazonaws.com/islandrascal_product_b07470703d.png"
+                    alt=""
+                />
             </div>
             <div class="beer-description">
                 <div>
-                    <h2>{{beerInfo.name}} - <i>{{ beerInfo.first_brewed}}</i></h2>
+                    <h2>
+                        {{ beerInfo.name }} - <i>{{ beerInfo.first_brewed }}</i>
+                    </h2>
                 </div>
-                <star-rating  class="averagestars" :star-size="20" :rating="avarage_ratings" :read-only="true"/> 
-                <div>{{beerInfo.description}}</div>
+                <star-rating
+                    class="averagestars"
+                    :star-size="20"
+                    :rating="avarage_ratings"
+                    :read-only="true"
+                />
+                <div>{{ beerInfo.description }}</div>
                 <ul>
-                    <li v-for="(item, index) in beerInfo.food_pairing" :key="index">{{item}}</li>
+                    <li
+                        v-for="(item, index) in beerInfo.food_pairing"
+                        :key="index"
+                    >
+                        {{ item }}
+                    </li>
                 </ul>
             </div>
         </div>
@@ -22,25 +39,50 @@
             <div class="review-section">
                 <h2 class="title">Reviews</h2>
 
-                <form @submit="submitComment($event)" class="review inputctrl" >
+                <form @submit="submitComment($event)" class="review inputctrl">
                     <div class="inputstar">
-                        <star-rating  class="averagestars" :star-size="25" v-model:rating="new_rating"/> 
+                        <star-rating
+                            class="averagestars"
+                            :star-size="25"
+                            v-model:rating="new_rating"
+                        />
                     </div>
                     <div class="inputbox">
-                        <input class="search" type="text" name="comment" v-model="comment">
-                        <input :disabled="comment == '' && new_rating == 0" class="searchButton" type="submit" value="Comment">
-                        
+                        <input
+                            class="search"
+                            type="text"
+                            name="comment"
+                            v-model="comment"
+                        />
+                        <input
+                            :disabled="comment == '' && new_rating == 0"
+                            class="searchButton"
+                            type="submit"
+                            value="Comment"
+                        />
                     </div>
-                    <span class="error-msg">{{errorMessage}}</span>
+                    <span class="error-msg">{{ errorMessage }}</span>
                 </form>
 
-                <div class="review" v-if="reviews.length == 0"> No reviews yet</div>
-                <div class="review" v-for="(item, index) in reviews" :key="item.id">
+                <div class="review" v-if="reviews.length == 0">
+                    No reviews yet
+                </div>
+                <div
+                    class="review"
+                    v-for="(item, index) in reviews"
+                    :key="item.id"
+                >
                     <div class="stars">
-                        <star-rating :star-size="20" :rating="item.rating" :read-only="true"/> 
-                        <span class="email"> <i>{{item.user}}</i> </span>
+                        <star-rating
+                            :star-size="20"
+                            :rating="item.rating"
+                            :read-only="true"
+                        />
+                        <span class="email">
+                            <i>{{ item.user }}</i>
+                        </span>
                     </div>
-                    <div>{{item.comments}}</div>
+                    <div>{{ item.comments }}</div>
                 </div>
             </div>
         </div>
@@ -50,94 +92,104 @@
 import StarRating from 'vue-star-rating'
 export default {
     components: {
-        StarRating
+        StarRating,
     },
     data() {
         return {
             beerInfo: {
                 id: 0,
-                name: "",
-                description: "",
-                first_brewed: "",
-                food_pairing: []
+                name: '',
+                description: '',
+                first_brewed: '',
+                food_pairing: [],
             },
             reviews: [],
             avarage_ratings: 0,
             new_rating: 0,
-            comment: "",
-            errorMessage: ""
+            comment: '',
+            errorMessage: '',
         }
     },
     methods: {
         async getBeerDetails(beerID) {
             try {
-                const res = await fetch('https://api.punkapi.com/v2/beers/' + beerID);
-                const data = await res.json();
-                this.beerInfo = data[0];
+                const res = await fetch(
+                    'https://api.punkapi.com/v2/beers/' + beerID
+                )
+                const data = await res.json()
+                this.beerInfo = data[0]
             } catch (error) {
-                console.log(error);
+                console.log(error)
             }
         },
         async getBeerReviews(beerID) {
             try {
-                const res = await fetch('http://localhost:3000/api/beer/ratings/' + beerID, {
-                    method: "get",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "x-user": localStorage.getItem('x-user'),
+                const res = await fetch(
+                    'http://localhost:3000/api/beer/ratings/' + beerID,
+                    {
+                        method: 'get',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'x-user': localStorage.getItem('x-user'),
+                        },
                     }
-                });
-                const data = await res.json();
-                this.calculateAverageRatings(data);
-                this.reviews = data;
+                )
+                const data = await res.json()
+                this.calculateAverageRatings(data)
+                this.reviews = data
             } catch (error) {
-                console.log(error);
+                console.log(error)
             }
         },
         async invokeBeerRatingAPI(beerID) {
             try {
                 const postData = {
                     rating: this.new_rating,
-                    comments: this.comment
+                    comments: this.comment,
                 }
-                const res = await fetch('http://localhost:3000/api/beer/rate/' + beerID, {
-                    method: "post",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "x-user": localStorage.getItem('x-user'),
-                    },
-                    body: JSON.stringify(postData),
-                });
-                this.getBeerReviews(beerID);
-                this.new_rating = 0;
-                this.comment = "";
+                const res = await fetch(
+                    'http://localhost:3000/api/beer/rate/' + beerID,
+                    {
+                        method: 'post',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'x-user': localStorage.getItem('x-user'),
+                        },
+                        body: JSON.stringify(postData),
+                    }
+                )
+                this.getBeerReviews(beerID)
+                this.new_rating = 0
+                this.comment = ''
             } catch (error) {
-                console.log(error);
+                console.log(error)
             }
         },
         calculateAverageRatings(data) {
             if (data.length > 0) {
-                let total = data.reduce(function (acc, obj) { return acc + obj.rating; }, 0);
-                this.avarage_ratings = total / data.length;
+                let total = data.reduce(function (acc, obj) {
+                    return acc + obj.rating
+                }, 0)
+                this.avarage_ratings = total / data.length
             }
         },
         goBack() {
-            this.$router.push('/');
+            this.$router.push('/')
         },
         submitComment(e) {
-            this.errorMessage = "";
-            e.preventDefault();
+            this.errorMessage = ''
+            e.preventDefault()
             if (this.new_rating !== 0) {
-                this.invokeBeerRatingAPI(this.$route.params.id);
+                this.invokeBeerRatingAPI(this.$route.params.id)
             } else {
-                this.errorMessage = "Please select the rating";
+                this.errorMessage = 'Please select the rating'
             }
-        }
+        },
     },
     mounted() {
-        this.getBeerDetails(this.$route.params.id);
-        this.getBeerReviews(this.$route.params.id);
-    }
+        this.getBeerDetails(this.$route.params.id)
+        this.getBeerReviews(this.$route.params.id)
+    },
 }
 </script>
 <style scoped>
@@ -183,7 +235,6 @@ export default {
 .stars {
     display: flex;
     justify-content: start;
-
 }
 
 .title {

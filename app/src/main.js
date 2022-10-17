@@ -6,4 +6,4 @@ import './assets/main.css'
 import App from './App.vue'
 
 // setting up the app and router together
-createApp(App).use(router).mount('#app');
+createApp(App).use(router).mount('#app')

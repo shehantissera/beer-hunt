@@ -35,6 +35,7 @@ export default {
     display: flex;
     align-content: center;
     justify-content: space-between;
+    min-width: 1000px;
 }
 
 .email {

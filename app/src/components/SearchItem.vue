@@ -39,5 +39,6 @@ export default {
     background-color: #242424;
     margin-bottom: 10px;
     user-select: none;
+    max-width: 1000px;
 }
 </style>
